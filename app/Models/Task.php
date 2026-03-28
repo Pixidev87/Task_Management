@@ -16,7 +16,7 @@ class Task extends Model
         "description",
         "status",
         "priority",
-        "dueDate" # # dueDate alapján szűrünk, nem datetime-ra, mert az időpontot figyelmen kívül hagyjuk
+        "dueDate"
     ];
 
     # a mezőket castolja a megfelelő típusra
@@ -47,7 +47,6 @@ class Task extends Model
     # visszaadja a Task-okat a prioritás alapján szűrve, ha a prioritás meg van adva, egyébként visszaadja az összes Task-ot
     public function scopeFilterByPriority(Builder $query, ?string $priority): Builder
     {
-        # $query tartalmazza a lekérdezést, $priority pedig a szűrési feltétel, ha meg van adva. Ha $priority nem null, akkor a lekérdezéshez hozzáadunk egy where feltételt, amely csak azokat a Task-okat adja vissza, amelyeknek a prioritása megegyezik a megadott $priority értékkel.
         return $query->when($priority, function ($query) use ($priority) {
             $query->where('priority', $priority);
         });
@@ -57,7 +56,6 @@ class Task extends Model
     # visszaadja a Task-okat a határidő alapján szűrve, ha a határidő meg van adva, egyébként visszaadja az összes Task-ot
     public function scopeFilterByDueDate(Builder $query, ?string $dueDate): Builder
     {
-        # $query tartalmazza a lekérdezést, $dueDate pedig a szűrési feltétel, ha meg van adva. Ha $dueDate nem null, akkor a lekérdezéshez hozzáadunk egy where feltételt, amely csak azokat a Task-okat adja vissza, amelyeknek a határideje megegyezik a megadott $dueDate értékkel.
         return $query->when($dueDate, function ($query) use ($dueDate) {
             $query->where('dueDate', $dueDate);
         });
