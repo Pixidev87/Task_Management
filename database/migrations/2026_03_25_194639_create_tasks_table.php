@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->string('status')->default('pending');
-            $table->string('priority')->default('medium');
-            $table->dateTime('due_date');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); # csatlakozás a users táblához és törléskor a kapcsolódó taskok is törlődnek
+            $table->string('title'); # kötelező mező a feladat címének tárolására
+            $table->text('description')->nullable(); # feladat leírása, nem kötelező mező
+            $table->string('status')->default('pending'); # feladat állapota, alapértelmezett érték: függőben
+            $table->string('priority')->default('medium'); # feladat prioritása, alapértelmezett érték: közepes
+            $table->dateTime('due_date'); # feladat határideje
             $table->timestamps();
         });
     }
